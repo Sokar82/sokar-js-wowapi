@@ -1,10 +1,10 @@
-﻿String.prototype.slugify = function() {
+String.prototype.slugify = function() {
     str = this.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
         
     // remove accents, swap ñ for n, etc
-    var from = 'àáäâèéëêìíïîòóöôùúüûñç?·/_:;';
-    var to = 'aaaaeeeeiiiioooouuuunc?-----';
+    var from = 'àáäâèéëêìïîòóöôùúüûñç?·/_:;';
+    var to = 'aaaaeeeeiiioooouuuunc?-----';
     for (var i=0, l=from.length ; i<l ; i++) {
         str = str.replace(new RegExp('\\' + from.charAt(i), 'g'), to.charAt(i));
     }
@@ -42,13 +42,13 @@ WoWAPI.prototype = {
     script.src = url
 
     script.onload = script.onreadystatechange = function() {
-      if (!script.readyState || /loaded|complete/.test(script.readyState)) {
-          script.onload = script.onreadystatechange = null;
-          script.parentNode.removeChild(script);
-          script = undefined;
-          if (window[func]) callback(null);
-          window[func] = undefined;
-      }
+			if(!script.readyState || /loaded|complete/.test(script.readyState)) {
+				script.onload = script.onreadystatechange = null;
+				script.parentNode.removeChild(script);
+				script = undefined;
+				if (window[func]) callback(null);
+				window[func] = undefined;
+			}
     };
     head.insertBefore(script, head.firstChild);
 	},
@@ -67,7 +67,8 @@ WoWAPI.prototype = {
 	},
 
 	getAuctionData: function(realm, callback){
-		throw 'The auction data API is currently not supported!';
+		throw 'The auction data API currently doesn\'t support JSONP!';
+		return;
 
 		var url = 'http://' + this.options.region + this.options.path + '/auction/data';
 
@@ -153,6 +154,9 @@ WoWAPI.prototype = {
 	},
 
 	getItem: function(itemid, callback){
+		throw 'The item data API is currently not public available!';
+		return;
+
 		var url = 'http://' + this.options.region + this.options.path + '/data/item';
 
 		this._validateArg(itemid, 'Missing or invalid itemid for WoWAPI.getItem()', 'number');
