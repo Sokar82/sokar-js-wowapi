@@ -26,6 +26,8 @@ function WoWAPI(options){
 }
 
 WoWAPI.prototype = {
+  cache: {},
+  
 	_createApiCall: function(url, callback){
 		var func = this.callback + (this.uid++);
 		window[func] = function(data){
@@ -101,6 +103,20 @@ WoWAPI.prototype = {
 
 		this._createApiCall(url, callback);
 	},
+   
+  getCachedCharacter: function(realm, charName, callback){
+    var fields = Array.prototype.slice.call(arguments, 3);
+    var key = realm + ':' + charName;
+    if(fields.length > 0){
+      url += ':' + fields.join(':');
+		}
+    if(this.cache[key]){
+      callback(this.cache[key]);
+    }
+    else{
+      this.getCharacter(realm, charName, callback, fields);
+    }
+  },
 
 	getCharacterClasses: function(callback){
 		var url = 'http://' + this.options.region + this.options.path + '/data/character/classes';
