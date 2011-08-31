@@ -117,7 +117,8 @@ WoWAPI.prototype = {
       callback(window['WoWAPICache'][key]);
     }
     else{
-      this.getCharacter(realm, charName, callback, fields);
+      this.getCharacter.apply(this, arguments);
+      //this.getCharacter(realm, charName, callback, fields);
     }
   },
 
