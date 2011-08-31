@@ -110,9 +110,9 @@ WoWAPI.prototype = {
     var fields = Array.prototype.slice.call(arguments, 3);
     var key = 'Char:' + realm + ':' + charName;
     if(fields.length > 0){
-      url += ':' + fields.join(':');
+      key += ':' + fields.join(':');
 		}
-      alert(key);
+
     if(window['WoWAPICache'][key]){
       callback(window['WoWAPICache'][key]);
     }
