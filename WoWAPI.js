@@ -97,7 +97,7 @@ WoWAPI.prototype = {
 		this._validateArg(callback, 'Invalid callback specified for WoWAPI.getCharacter()', 'function');
 
 		var fields = Array.prototype.slice.call(arguments, 3);
-     var key = 'Char:' +  realm + ':' + charName;
+    var key = 'Char:' +  realm + ':' + charName;
 		if(fields.length > 0){
       key += ':' + fields.join(':');
 			url += '?fields=' + fields.join(',').slugify();
@@ -112,6 +112,7 @@ WoWAPI.prototype = {
     if(fields.length > 0){
       url += ':' + fields.join(':');
 		}
+      alert(key);
     if(window['WoWAPICache'][key]){
       callback(window['WoWAPICache'][key]);
     }
