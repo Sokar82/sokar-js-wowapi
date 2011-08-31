@@ -112,7 +112,7 @@ WoWAPI.prototype = {
     if(fields.length > 0){
       key += ':' + fields.join(':');
 		}
-    alert(key);
+
     if(window['WoWAPICache'][key]){
       callback(window['WoWAPICache'][key]);
     }
