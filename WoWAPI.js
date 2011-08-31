@@ -23,15 +23,14 @@ function WoWAPI(options){
   }  
   this.callback = 'WoWAPI' + Math.floor((100000)*Math.random());
   this.uid = new Date().getTime();
-  this.cache = this.callback + (this.uid++);
-  window[this.cache] = {};
+  window['WoWAPICache'] = {};
 }
 
 WoWAPI.prototype = {
   _createApiCall: function(url, callback, cacheKey){
 		var func = this.callback + (this.uid++);
 		window[func] = function(data){
-      window[this.cache][cacheKey] = data;
+      window['WoWAPICache'][cacheKey] = data;
 			callback(data);
 			window[func] = undefined;
 		}
@@ -113,8 +112,8 @@ WoWAPI.prototype = {
     if(fields.length > 0){
       url += ':' + fields.join(':');
 		}
-    if(window[this.cache][key]){
-      callback(window[this.cache][key]);
+    if(window['WoWAPICache'][key]){
+      callback(window['WoWAPICache'][key]);
     }
     else{
       this.getCharacter(realm, charName, callback, fields);
