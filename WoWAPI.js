@@ -23,14 +23,15 @@ function WoWAPI(options){
   }  
   this.callback = 'WoWAPI' + Math.floor((100000)*Math.random());
   this.uid = new Date().getTime();
+  this.cache = this.callback + (this.uid++);
+  window[this.cache] = {};
 }
 
 WoWAPI.prototype = {
-  cache: {},
-  
-	_createApiCall: function(url, callback){
+  _createApiCall: function(url, callback, cacheKey){
 		var func = this.callback + (this.uid++);
 		window[func] = function(data){
+      window[this.cache][cacheKey] = data;
 			callback(data);
 			window[func] = undefined;
 		}
@@ -97,21 +98,23 @@ WoWAPI.prototype = {
 		this._validateArg(callback, 'Invalid callback specified for WoWAPI.getCharacter()', 'function');
 
 		var fields = Array.prototype.slice.call(arguments, 3);
+     var key = 'Char:' +  realm + ':' + charName;
 		if(fields.length > 0){
+      key += ':' + fields.join(':');
 			url += '?fields=' + fields.join(',').slugify();
 		}
 
-		this._createApiCall(url, callback);
+		this._createApiCall(url, callback, key);
 	},
    
   getCachedCharacter: function(realm, charName, callback){
     var fields = Array.prototype.slice.call(arguments, 3);
-    var key = realm + ':' + charName;
+    var key = 'Char:' + realm + ':' + charName;
     if(fields.length > 0){
       url += ':' + fields.join(':');
 		}
-    if(this.cache[key]){
-      callback(this.cache[key]);
+    if(window[this.cache][key]){
+      callback(window[this.cache][key]);
     }
     else{
       this.getCharacter(realm, charName, callback, fields);
