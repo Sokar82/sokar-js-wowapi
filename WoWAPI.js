@@ -44,13 +44,13 @@ WoWAPI.prototype = {
     script.src = url
 
     script.onload = script.onreadystatechange = function() {
-			if(!script.readyState || /loaded|complete/.test(script.readyState)) {
-				script.onload = script.onreadystatechange = null;
-				script.parentNode.removeChild(script);
-				script = undefined;
-				if (window[func]) callback(null);
-				window[func] = undefined;
-			}
+      if(!script.readyState || /loaded|complete/.test(script.readyState)) {
+        script.onload = script.onreadystatechange = null;
+        script.parentNode.removeChild(script);
+        script = undefined;
+        if (window[func]) callback(null);
+          window[func] = undefined;
+        }
     };
     head.insertBefore(script, head.firstChild);
 	},
