@@ -29,10 +29,10 @@ function WoWAPI(options){
 WoWAPI.prototype = {
   _createApiCall: function(url, callback, cacheKey){
 		var func = this.callback + (this.uid++);
-		window[func] = function(data){
+    window[func] = function(data){
       window['WoWAPICache'][cacheKey] = data;
-			callback(data);
-			window[func] = undefined;
+      callback(data);
+      window[func] = undefined;
 		}
 
 		url += (url.indexOf('?') == -1 ? '?' : '&') + 'jsonp=' + func;
