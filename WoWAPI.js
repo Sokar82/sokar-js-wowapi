@@ -34,10 +34,10 @@ WoWAPI.prototype = {
       callback(data);
       window[func] = undefined;
 		}
+      
+    url += (url.indexOf('?') == -1 ? '?' : '&') + 'jsonp=' + func;
 
-		url += (url.indexOf('?') == -1 ? '?' : '&') + 'jsonp=' + func;
-
-		var script = document.createElement('script');
+    var script = document.createElement('script');
     var head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
     script.type = 'text/javascript';
     script.async = "async";
